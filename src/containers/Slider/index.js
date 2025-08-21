@@ -32,7 +32,10 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {slides?.map((slide, idx) => (
-        <div key={slide.id} className={`SlideCard SlideCard--${index === idx ? 'display' : 'hide'}`}>
+        <div
+          key={`slide-${slide.id || idx}`} // clé unique sécurisée
+          className={`SlideCard SlideCard--${index === idx ? 'display' : 'hide'}`}
+        >
           <img src={slide.cover} alt={slide.title} />
           <div className="SlideCard__descriptionContainer">
             <div className="SlideCard__description">
@@ -48,7 +51,7 @@ const Slider = () => {
         <div className="SlideCard__pagination">
           {slides?.map((slide, idx) => (
             <input
-              key={`radio-${slide.id}`}
+              key={`radio-${slide.id || idx}`} // clé unique sécurisée
               type="radio"
               name="slider-radio"
               checked={index === idx}
