@@ -13,4 +13,8 @@ export const MONTHS = {
   11: "décembre",
 };
 
-export const getMonth = (date) => MONTHS[date.getMonth()];
+export const getMonth = (date) => {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return "Mois inconnu";
+  return MONTHS[date.getMonth()] ?? "Mois inconnu";
+};
+
