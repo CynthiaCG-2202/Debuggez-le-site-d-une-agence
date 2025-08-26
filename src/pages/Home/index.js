@@ -131,19 +131,40 @@ const Page = () => {
         <div>01 23 45 67 89</div>
         <div>contact@724events.com</div>
         <div>
-          <a href="#twitch">
+          <a
+            href="https://www.twitch.tv"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Lien vers Twitch"
+          >
             <Icon name="twitch" />
           </a>
-          <a href="#facebook">
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Lien vers Facebook"
+          >
             <Icon name="facebook" />
           </a>
-          <a href="#twitter">
+          <a
+            href="https://www.twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Lien vers Twitter"
+          >
             <Icon name="twitter" />
           </a>
-          <a href="#youtube">
+          <a
+            href="https://www.youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Lien vers YouTube"
+          >
             <Icon name="youtube" />
           </a>
         </div>
+
       </div>
       <div className="col description">
         <Logo size="large" />
