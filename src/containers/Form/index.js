@@ -48,7 +48,7 @@ const Form = ({ onSuccess, onError }) => {
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer"}
           </Button>
-          {success && <p>Message envoyé !</p>}
+          {success}
         </div>
         <div className="col">
           <Field
