@@ -13,7 +13,9 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { last } = useData()
+  const dataContext = useData()
+
+  const { lastEvent } = dataContext;
   return <>
     <header>
       <Menu />
@@ -23,7 +25,7 @@ const Page = () => {
         <Slider />
       </section>
       <section className="ServicesContainer">
-        <h2 className="Title">Nos services</h2>
+        <h2 className="Title" id="nos-services">Nos services</h2>
         <p>Nous organisons des événements sur mesure partout dans le monde</p>
         <div className="ListContainer">
           <ServiceCard imageSrc="/images/priscilla-du-preez-Q7wGvnbuwj0-unsplash1.png">
@@ -35,7 +37,7 @@ const Page = () => {
           </ServiceCard>
           <ServiceCard imageSrc="/images/hall-expo.png">
             <h3>Conférences</h3>
-            724 events vous propose d’organiser votre évènement, quelle que soit
+            77 events vous propose d’organiser votre évènement, quelle que soit
             sa taille, en s’adaptant à votre demande et à vos demandes. En tant
             que spécialistes de l’évènementiel, nous saurons trouver le lieu
             parfait ainsi que des solutions inédites pour capter votre audience
@@ -52,11 +54,11 @@ const Page = () => {
         </div>
       </section>
       <section className="EventsContainer">
-        <h2 className="Title">Nos réalisations</h2>
+        <h2 className="Title" id="nos-realisations">Nos réalisations</h2>
         <EventList />
       </section>
       <section className="PeoplesContainer">
-        <h2 className="Title">Notre équipe</h2>
+        <h2 className="Title" id="notre-equipe">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
         <div className="ListContainer">
           <PeopleCard
@@ -98,70 +100,58 @@ const Page = () => {
             <div className="ModalMessage--success">
               <div data-testid="success-message">Message envoyé !</div>
               <p>Merci pour votre message nous tâcherons de vous répondre dans les plus brefs délais</p>
+
+
+
             </div>
           }
         >
           {({ setIsOpened }) => (
             <Form
-              onSuccess={() => setIsOpened(true)}
+              onSuccess={() => {
+
+                setIsOpened(true);
+              }}
               onError={() => null}
             />
+
           )}
         </Modal>
       </div>
     </main>
-    <footer className="row">
+    <footer data-testid="footer" className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        {last && (
+
+        {lastEvent && (
           <EventCard
-            imageSrc={last.cover}
-            title={last.title}
-            date={new Date(last.date)}
-            label={last.label ?? "Événement"}
-          />
-        )}
+            imageSrc={lastEvent?.cover}
+            title={lastEvent?.title}
+            date={new Date(lastEvent?.date)}
+            small
+            label="boom"
+          />)}
+
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
         <address>45 avenue de la République, 75000 Paris</address>
         <div>01 23 45 67 89</div>
-        <div>contact@724events.com</div>
+        <div>contact@77events.com</div>
         <div>
-          <a
-            href="https://www.twitch.tv"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Lien vers Twitch"
-          >
+          <a href="#twitch">
             <Icon name="twitch" />
           </a>
-          <a
-            href="https://www.facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Lien vers Facebook"
-          >
+          <a href="#facebook">
             <Icon name="facebook" />
           </a>
-          <a
-            href="https://www.twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Lien vers Twitter"
-          >
+          <a href="#twitter">
             <Icon name="twitter" />
           </a>
-          <a
-            href="https://www.youtube.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Lien vers YouTube"
-          >
+          <a href="#youtube">
             <Icon name="youtube" />
           </a>
         </div>
-
       </div>
       <div className="col description">
         <Logo size="large" />
@@ -175,5 +165,6 @@ const Page = () => {
     </footer>
   </>
 }
+
 
 export default Page;
