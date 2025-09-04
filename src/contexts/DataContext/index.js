@@ -5,10 +5,10 @@ import {
   useContext,
   useEffect,
   useState,
+  useMemo,
 } from "react";
 
 const DataContext = createContext({});
-
 
 export const api = {
   loadData: async () => {
@@ -20,43 +20,51 @@ export const api = {
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+
   const getData = useCallback(async () => {
     try {
-      setData(await api.loadData())
-
+      setData(await api.loadData());
     } catch (err) {
       setError(err);
     }
   }, []);
 
-  const events = data?.events
-  const eventsTrie = events?.sort((evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1))
-  const lastEvent = eventsTrie?.[0]
+  const events = data?.events;
+  const uniqueEvents = events
+    ? Array.from(new Map(events.map(evt => [evt.id, evt])).values())
+    : [];
+
+  const eventsTrie = uniqueEvents.sort(
+    (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1)
+  );
+
+  const lastEvent = eventsTrie?.[0];
 
   useEffect(() => {
     if (data) return;
     getData();
-  });
-  
+  }, [data, getData]);
+
+  // 👉 Correction : on fige la value avec useMemo
+  const contextValue = useMemo(
+    () => ({
+      data,
+      error,
+      lastEvent,
+    }),
+    [data, error, lastEvent]
+  );
 
   return (
-    <DataContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{
-        data,
-        error, 
-        lastEvent,
-      }}
-    >
+    <DataContext.Provider value={contextValue}>
       {children}
     </DataContext.Provider>
   );
 };
 
-
 DataProvider.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
 export const useData = () => useContext(DataContext);
 export default DataContext;
