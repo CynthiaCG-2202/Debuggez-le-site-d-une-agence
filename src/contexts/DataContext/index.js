@@ -20,6 +20,7 @@ export const api = {
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const [lastEvent, setlastEvent] = useState(null);
 
   const getData = useCallback(async () => {
     try {
@@ -28,24 +29,24 @@ export const DataProvider = ({ children }) => {
       setError(err);
     }
   }, []);
-
-  const events = data?.events;
-  const uniqueEvents = events
-    ? Array.from(new Map(events.map(evt => [evt.id, evt])).values())
-    : [];
-
-  const eventsTrie = uniqueEvents.sort(
-    (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1)
-  );
-
-  const lastEvent = eventsTrie?.[0];
-
+  
   useEffect(() => {
-    if (data) return;
+    if (data) {
+
+      const events = data?.events;
+      const uniqueEvents = events
+        ? Array.from(new Map(events.map(evt => [evt.id, evt])).values())
+        : [];
+
+      const eventsTrie = uniqueEvents.sort(
+        (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1)
+      );
+      setlastEvent(eventsTrie?.[0])
+      return
+    };
     getData();
   }, [data, getData]);
 
-  // 👉 Correction : on fige la value avec useMemo
   const contextValue = useMemo(
     () => ({
       data,

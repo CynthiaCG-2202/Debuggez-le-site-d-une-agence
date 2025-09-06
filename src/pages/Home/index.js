@@ -100,9 +100,6 @@ const Page = () => {
             <div className="ModalMessage--success">
               <div data-testid="success-message">Message envoyé !</div>
               <p>Merci pour votre message nous tâcherons de vous répondre dans les plus brefs délais</p>
-
-
-
             </div>
           }
         >
